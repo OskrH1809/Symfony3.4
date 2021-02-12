@@ -3,15 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Categoria
+ * Tapa
  *
- * @ORM\Table(name="categoria")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoriaRepository")
+ * @ORM\Table(name="tapa")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TapaRepository")
  */
-class Categoria
+class Tapa
 {
     /**
      * @var int
@@ -25,7 +24,7 @@ class Categoria
     /**
      * @var string
      *
-     * @ORM\Column(name="nombre", type="string", length=128)
+     * @ORM\Column(name="nombre", type="string", length=255)
      */
     private $nombre;
 
@@ -39,19 +38,38 @@ class Categoria
     /**
      * @var string
      *
+     * @ORM\Column(name="ingredientes", type="text")
+     */
+    private $ingredientes;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="foto", type="string", length=255)
      */
     private $foto;
 
-        /**
-         * @ORM\OneToMany(targetEntity="Tapa", mappedBy="categoria")
-         */
-        private $tapas;
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaCreacion", type="datetime")
+     */
+    private $fechaCreacion;
 
-        public function __construct()
-        {
-            $this->tapas = new ArrayCollection();
-        }
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="top", type="boolean")
+     */
+    private $top;
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="$tapas")
+     * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
+     */
+    private $categoria;
+
+
 
     /**
      * Get id
@@ -68,7 +86,7 @@ class Categoria
      *
      * @param string $nombre
      *
-     * @return Categoria
+     * @return Tapa
      */
     public function setNombre($nombre)
     {
@@ -92,7 +110,7 @@ class Categoria
      *
      * @param string $descripcion
      *
-     * @return Categoria
+     * @return Tapa
      */
     public function setDescripcion($descripcion)
     {
@@ -112,11 +130,35 @@ class Categoria
     }
 
     /**
+     * Set ingredientes
+     *
+     * @param string $ingredientes
+     *
+     * @return Tapa
+     */
+    public function setIngredientes($ingredientes)
+    {
+        $this->ingredientes = $ingredientes;
+
+        return $this;
+    }
+
+    /**
+     * Get ingredientes
+     *
+     * @return string
+     */
+    public function getIngredientes()
+    {
+        return $this->ingredientes;
+    }
+
+    /**
      * Set foto
      *
      * @param string $foto
      *
-     * @return Categoria
+     * @return Tapa
      */
     public function setFoto($foto)
     {
@@ -136,36 +178,51 @@ class Categoria
     }
 
     /**
-     * Add tapa
+     * Set fechaCreacion
      *
-     * @param \AppBundle\Entity\Tapa $tapa
+     * @param \DateTime $fechaCreacion
      *
-     * @return Categoria
+     * @return Tapa
      */
-    public function addTapa(\AppBundle\Entity\Tapa $tapa)
+    public function setFechaCreacion($fechaCreacion)
     {
-        $this->tapas[] = $tapa;
+        $this->fechaCreacion = $fechaCreacion;
 
         return $this;
     }
 
     /**
-     * Remove tapa
+     * Get fechaCreacion
      *
-     * @param \AppBundle\Entity\Tapa $tapa
+     * @return \DateTime
      */
-    public function removeTapa(\AppBundle\Entity\Tapa $tapa)
+    public function getFechaCreacion()
     {
-        $this->tapas->removeElement($tapa);
+        return $this->fechaCreacion;
     }
 
     /**
-     * Get tapas
+     * Set top
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @param boolean $top
+     *
+     * @return Tapa
      */
-    public function getTapas()
+    public function setTop($top)
     {
-        return $this->tapas;
+        $this->top = $top;
+
+        return $this;
+    }
+
+    /**
+     * Get top
+     *
+     * @return bool
+     */
+    public function getTop()
+    {
+        return $this->top;
     }
 }
+
