@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Tapa;
+use AppBundle\Entity\Categoria;
+use AppBundle\Entity\Ingrediente2;
 
 class DefaultController extends Controller
 {
@@ -55,6 +57,38 @@ class DefaultController extends Controller
             $repository = $this->getDoctrine()->getRepository(Tapa::class);
             $tapa = $repository->find($id);
             return $this->render('frontal/tapa.html.twig',array("tapa"=>$tapa));
+        }else{
+            return $this->redirectToRoute('homepage');
+        }
+    }
+
+    /**
+     * @Route("/categoria/{id}", name="categoria")
+     * 
+     **/
+    public function CatAction(Request $request,$id=null)
+    {
+        
+        if ($id!=null) {
+            $repository = $this->getDoctrine()->getRepository(Categoria::class);
+            $categoria = $repository->find($id);
+            return $this->render('frontal/categoria.html.twig',array("categoria"=>$categoria));
+        }else{
+            return $this->redirectToRoute('homepage');
+        }
+    }
+
+       /**
+     * @Route("/ingrediente2/{id}", name="ingrediente2")
+     * 
+     **/
+    public function IngreAction(Request $request,$id=null)
+    {
+        
+        if ($id!=null) {
+            $repository = $this->getDoctrine()->getRepository(Ingrediente2::class);
+            $ingrediente2 = $repository->find($id);
+            return $this->render('frontal/ingrediente2.html.twig',array("ingrediente2"=>$ingrediente2));
         }else{
             return $this->redirectToRoute('homepage');
         }

@@ -35,12 +35,6 @@ class Tapa
      */
     private $descripcion;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="ingredientes", type="text")
-     */
-    private $ingredientes;
 
     /**
      * @var string
@@ -68,6 +62,24 @@ class Tapa
      * @ORM\JoinColumn(name="categoria_id", referencedColumnName="id")
      */
     private $categoria;
+
+// ...
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Ingrediente2")
+     * @ORM\JoinTable(name="ingredientes2_tapas",
+     *      joinColumns={@ORM\JoinColumn(name="id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="ingredientes2", referencedColumnName="id")}
+     *      )
+     */
+    private $ingredientes2;
+
+    // ...
+
+    public function __construct() {
+        $this->ingredientes2 = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
 
 
 
@@ -129,29 +141,6 @@ class Tapa
         return $this->descripcion;
     }
 
-    /**
-     * Set ingredientes
-     *
-     * @param string $ingredientes
-     *
-     * @return Tapa
-     */
-    public function setIngredientes($ingredientes)
-    {
-        $this->ingredientes = $ingredientes;
-
-        return $this;
-    }
-
-    /**
-     * Get ingredientes
-     *
-     * @return string
-     */
-    public function getIngredientes()
-    {
-        return $this->ingredientes;
-    }
 
     /**
      * Set foto
