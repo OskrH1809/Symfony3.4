@@ -1,0 +1,100 @@
+{#plantilla de nuestra aplicacion#}
+{%extends 'base.html.twig' %}
+{%block title%}
+Hola Symfony!
+{%endblock%}
+{#Conntenido#}
+
+{% block body %}
+ <header>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner" role="listbox">
+        <!-- Slide One - Set the background image for this slide in the line below -->
+        <div class="carousel-item active" style="background-image: url({{asset('img/slider01.png')}})">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>El bar de oscar</h3>
+            <p>Disfruta de las mejores tapas.</p>
+          </div>
+        </div>
+        <!-- Slide Two - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url({{asset('img/slider02.png')}})">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>El bar de oscar</h3>
+            <p>El mejor lugar de las tapas.</p>
+          </div>
+        </div>
+        <!-- Slide Three - Set the background image for this slide in the line below -->
+        <div class="carousel-item" style="background-image: url({{asset('img/slider03.png')}})">
+          <div class="carousel-caption d-none d-md-block">
+            <h3>El bar de oscar</h3>
+            <p>El Hogas de las tapas.</p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </header>
+
+
+
+    
+  <!-- Page Content -->
+  <div class="container mt-5">
+    
+        <!-- Portfolio Section -->
+    <h2>Nuestras mejores tapas</h2>
+    <hr>    
+    
+    <div class="row">
+     
+      {%for tapa in tapas %}
+      <div class="col-lg-4 col-sm-6 portfolio-item">
+        <div class="card h-100">
+          <a href="{{path('tapa',{'id':tapa.id})}}"><img class="card-img-top" src={% if tapa.foto|length > 0  %} "{{asset(tapaImg~tapa.foto)}}" {% else %} "http://placehold.it/700x400"{% endif %} alt=""></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="{{path('tapa',{'id':tapa.id})}}">{{tapa.nombre}}</a>
+            </h4>
+            <p class="card-text">{{tapa.descripcion}}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- /.row -->
+        <!-- Features Section -->
+    <div class="row">
+      <div class="col-lg-6">
+        <h2>Modern Business Features</h2>
+        <p>The Modern Business template by Start Bootstrap includes:</p>
+        <ul>
+          <li>
+            <strong>Bootstrap v4</strong>
+          </li>
+          <li>jQuery</li>
+          <li>Font Awesome</li>
+          <li>Working contact form with validation</li>
+          <li>Unstyled page elements for easy customization</li>
+        </ul>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
+      </div>
+      <div class="col-lg-6">
+        <img class="img-fluid rounded" src="http://placehold.it/700x450" alt="">
+      </div>
+    </div>
+    <!-- /.row -->
+    <hr>
+  </div>
+{%endblock%}
