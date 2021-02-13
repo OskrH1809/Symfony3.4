@@ -11,6 +11,8 @@ use Symfony\Component\Routing\Annotation\Route;
 // use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Form\TapaType;
 use AppBundle\Entity\Tapa;
+use AppBundle\Form\CategoriaType;
+use AppBundle\Entity\Categoria;
 
 // use AppBundle\Form\TaskType;
   /**
@@ -66,6 +68,7 @@ class GestionTapasController extends Controller
         return $this->render('gestionTapas/nuevaTapa.html.twig',array('form'=>$form->createView()));
     }
 
+
     /**
      * @return string
      */
@@ -73,6 +76,54 @@ class GestionTapasController extends Controller
 
         return md5(uniqid());
     }
+
+
+    /**
+     * @Route("/nuevacategoria", name="nuevacategoria")
+     * 
+     **/
+    public function nuevaCatAction(Request $request)
+    { 
+        $categoria = new Categoria();
+
+        //construyendo formulario
+        $form = $this->createForm(CategoriaType::class, $categoria);
+        //recogemos la informacion
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $categoria = $form->getData();//rellenar la entity tapa
+            $fotoFile=$categoria->getFoto();
+            $fileName= $this->generateUniqueFileName().'.'.$fotoFile->guessExtension();
+
+            $fotoFile->move(
+                $this->getParameter('tapaImg_directory'),
+                $fileName
+            );
+            
+      
+
+            $categoria->setFoto($fileName    );
+            
+            // $categoria->setFechaCreacion(new \Datetime());
+            //almacenar nueva tapa
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($categoria);
+            $em->flush();
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            // $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($task);
+            // $entityManager->flush();
+    
+            return $this->redirectToRoute('categoria',array('id'=>$categoria->getId()));
+            // return $this->render('test/test.html.twig');
+        }
+        //
+        return $this->render('gestionTapas/nuevacategoria.html.twig',array('form'=>$form->createView()));
+    }
+
 
 }
 ?>
