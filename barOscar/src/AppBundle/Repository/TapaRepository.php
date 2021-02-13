@@ -10,4 +10,13 @@ namespace AppBundle\Repository;
  */
 class TapaRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function paginaTapas($pagina=1,$numTapas=3){
+        //funcion que devuelve las tapas para una pagina con n elementos
+        $query = $this->createQueryBuilder('t')
+        ->where('t.top = 1')
+        ->setFirstResult($numTapas*($pagina-1))
+        ->setMaxResults(3)
+        ->getQuery();
+        return $query->getResult();
+    }
 }

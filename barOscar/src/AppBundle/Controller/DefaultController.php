@@ -12,17 +12,29 @@ use AppBundle\Entity\Ingrediente;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/{pagina}", name="homepage")
      * 
      **/
-     public function homeAction(Request $request)
+     public function homeAction(Request $request,$pagina=1)
     {   
+        $numTapas=3;
         //capturar el repositorio de la tabla con la base de datos
         $repository = $this->getDoctrine()->getRepository(Tapa::class);
-        $tapas = $repository->findByTop(1);
+        // $tapas = $repository->findByTop(1);
+
+        // $query = $repository->createQueryBuilder('t')
+        // ->where('t.top = 1')
+        // ->setFirstResult($numTapas*($pagina-1))
+        // ->setMaxResults(3)
+        // ->getQuery();
+        // $tapas= $query->getResult();
         // var_dump($tapas);
         // replace this example code with whatever you need
-        return $this->render('frontal/index.html.twig',array('tapas'=>$tapas));
+
+
+        // ------------------------------------
+        $tapas = $repository->paginaTapas($pagina);
+        return $this->render('frontal/index.html.twig',array('tapas'=>$tapas,'paginaActual'=>$pagina));
     }
     
      /**
