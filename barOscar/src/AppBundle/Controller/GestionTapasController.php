@@ -13,6 +13,8 @@ use AppBundle\Form\TapaType;
 use AppBundle\Entity\Tapa;
 use AppBundle\Form\CategoriaType;
 use AppBundle\Entity\Categoria;
+use AppBundle\Form\IngredienteType;
+use AppBundle\Entity\Ingrediente;
 
 // use AppBundle\Form\TaskType;
   /**
@@ -102,8 +104,6 @@ class GestionTapasController extends Controller
                 $fileName
             );
             
-      
-
             $categoria->setFoto($fileName    );
             
             // $categoria->setFechaCreacion(new \Datetime());
@@ -122,6 +122,41 @@ class GestionTapasController extends Controller
         }
         //
         return $this->render('gestionTapas/nuevacategoria.html.twig',array('form'=>$form->createView()));
+    }
+
+    /**
+     * @Route("/nuevoingrediente", name="nuevoingrediente")
+     * 
+     **/
+    public function nuevoIngreAction(Request $request)
+    { 
+        $ingrediente = new Ingrediente();
+
+        //construyendo formulario
+        $form = $this->createForm(IngredienteType::class, $ingrediente);
+        //recogemos la informacion
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $ingrediente = $form->getData();//rellenar la entity tapa
+            
+            // $categoria->setFechaCreacion(new \Datetime());
+            //almacenar nueva tapa
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($ingrediente);
+            $em->flush();
+            // ... perform some action, such as saving the task to the database
+            // for example, if Task is a Doctrine entity, save it!
+            // $entityManager = $this->getDoctrine()->getManager();
+            // $entityManager->persist($task);
+            // $entityManager->flush();
+    
+            return $this->redirectToRoute('ingrediente',array('id'=>$ingrediente->getId()));
+            // return $this->render('test/test.html.twig');
+        }
+        //
+        return $this->render('gestionTapas/nuevoingrediente.html.twig',array('form'=>$form->createView()));
     }
 
 

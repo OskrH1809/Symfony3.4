@@ -134,5 +134,38 @@ class Categoria
     {
         return $this->foto;
     }
-}
 
+    /**
+     * Add tapa
+     *
+     * @param \AppBundle\Entity\Tapa $tapa
+     *
+     * @return Categoria
+     */
+    public function addTapa(\AppBundle\Entity\Tapa $tapa)
+    {
+        $this->tapas[] = $tapa;
+
+        return $this;
+    }
+
+    /**
+     * Remove tapa
+     *
+     * @param \AppBundle\Entity\Tapa $tapa
+     */
+    public function removeTapa(\AppBundle\Entity\Tapa $tapa)
+    {
+        $this->tapas->removeElement($tapa);
+    }
+
+    /**
+     * Get tapas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTapas()
+    {
+        return $this->tapas;
+    }
+}
