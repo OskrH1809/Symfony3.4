@@ -62,8 +62,15 @@
                
 
                 <li class="nav-item">
-                    <a class="nav-link" href="">Reservas</a>
+                    {% if app.user %}
+                    <a class="nav-link" href="{{path('logout')}}">Salir</a>
+                    {% else %}
+                    <a class="nav-link" href="{{path('login')}}">Reservas   </a>
+                    {% endif %}
+
+
                 </li>
+        
         
                 </ul>
             </div>
