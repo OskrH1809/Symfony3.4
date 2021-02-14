@@ -15,6 +15,7 @@ use AppBundle\Form\CategoriaType;
 use AppBundle\Entity\Categoria;
 use AppBundle\Form\IngredienteType;
 use AppBundle\Entity\Ingrediente;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 // use AppBundle\Form\TaskType;
   /**
@@ -158,6 +159,9 @@ class GestionTapasController extends Controller
         //
         return $this->render('gestionTapas/nuevoingrediente.html.twig',array('form'=>$form->createView()));
     }
+
+    
+
 
 
 }

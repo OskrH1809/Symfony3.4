@@ -6,8 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use AppBundle\Entity\Tapa;
+use AppBundle\Entity\Usuario;
 use AppBundle\Entity\Categoria;
+use AppBundle\Form\UsuarioType;
 use AppBundle\Entity\Ingrediente;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class DefaultController extends Controller
 {
@@ -38,7 +42,7 @@ class DefaultController extends Controller
     }
     
      /**
-     * @Route("/nosotros", name="nosotros")
+     * @Route("/nosotros/", name="nosotros")
      * 
      **/
     public function nosotrosAction(Request $request)
@@ -110,4 +114,53 @@ class DefaultController extends Controller
 
 
 
+    /**
+     * @Route("/registro/", name="registro")
+     * 
+     **/
+    public function registroAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    { 
+        $usuario = new Usuario();
+
+        //construyendo formulario
+        $form = $this->createForm(UsuarioType::class, $usuario);
+        //recogemos la informacion
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            // 3) Encode the password (you could also do this via Doctrine listener)
+            $password = $passwordEncoder->encodePassword($usuario, $usuario->getPlainPassword());
+            $usuario->setPassword($password);
+
+            $usuario->setUsername($usuario->getEmail());
+
+            // 4) save the User!
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($usuario);
+            $entityManager->flush();
+    
+            return $this->redirectToRoute('login');
+            // return $this->render('test/test.html.twig');
+        }
+        //
+        return $this->render('frontal/registro.html.twig',array('form'=>$form->createView()));
+    }
+
+    
+    /**
+     * @Route("/login/", name="login")
+     *  
+     **/
+    public function loginAction(Request $request,AuthenticationUtils $authenticationUtils)
+    {
+                // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+        return $this->render('frontal/login.html.twig',array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
+    }
 }

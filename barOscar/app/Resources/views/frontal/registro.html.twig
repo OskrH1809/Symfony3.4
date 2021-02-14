@@ -1,0 +1,28 @@
+{%extends 'base.html.twig' %}
+{% form_theme form 'form/tapaForm.html.twig' %}
+
+{%block title%} Registr Usuario {% endblock %}
+
+{% block body %}
+
+  <div class="container">
+
+      <h1 class="mb-3 mt-4">Registro</h1>
+
+            <!-- Intro Content -->
+          <div class="row">
+                  <div class="col-lg-6">
+                    {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                    {{form_end(form)}}
+                  </div>
+                  <div class="col-lg-6">
+                    <h2>About Modern Business</h2>
+                     <p>pisicing elit. Et, consequuntur, modi mollitia corporis ipsa voluptate corrupti eum ratione ex ea praesentium quibusdam? Aut, in eum facere corrupti necessitatibus perspiciatis quis?</p>
+                  </div>
+             </div>
+ 
+      </div>
+        <!-- /.row -->
+  </div>
+{% endblock %}
