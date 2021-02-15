@@ -29,3 +29,4 @@ security:
                 target: /
     access_control:
         - { path: '^/gestiontapas', roles: ROLE_ADMIN }
+        - { path: '^/reservas', roles: ROLE_USER }

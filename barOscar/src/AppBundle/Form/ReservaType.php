@@ -27,7 +27,7 @@ class ReservaType extends AbstractType
         ->add('fecha', DateTimeType::class)
         ->add('comensales', IntegerType::class,array('label'=>'Numero de comensales'))
         ->add('Observaciones', CKEditorType::class,array('label'=>'Observaciones'))
-        ->add('Guardar', SubmitType::class,array('label'=>'Nueva categoria'))
+        ->add('Guardar', SubmitType::class,array('label'=>'Nueva Reserva'))
         ;
     }
 }

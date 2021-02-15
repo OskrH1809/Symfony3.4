@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Reserva
@@ -32,6 +33,12 @@ class Reserva
      * @var int
      *
      * @ORM\Column(name="comensales", type="integer")
+     * @Assert\Range(
+     *      min = 1,
+     *      max = 12,
+     *      minMessage = "El minimo es 1 y el maximo 12",
+     *      maxMessage = "El minimo es 1 y el maximo 12"
+     * )
      */
     private $comensales;
 
@@ -39,6 +46,7 @@ class Reserva
      * @var string
      *
      * @ORM\Column(name="observaciones", type="text", nullable=true)
+     * 
      */
     private $observaciones;
 

@@ -22,12 +22,19 @@ class GestionReservasController extends Controller
 {
 
     /**
-     * @Route("/nueva", name="nuevaReserva")
+     * @Route("/nueva/{id}", name="nuevaReserva")
      * 
      **/
-    public function nuevaTapaAction(Request $request)
+    public function nuevaTapaAction(Request $request,$id=null)
     { 
-        $reserva = new Reserva();
+        if ($id) {
+            $repository = $this->getDoctrine()->getRepository(Reserva::class);
+            $reserva = $repository->find($id);
+        }else{
+            $reserva = new Reserva();
+        }
+
+
         $form = $this->createForm(ReservaType::class, $reserva);
         $form->handleRequest($request);
         
@@ -54,10 +61,26 @@ class GestionReservasController extends Controller
      **/
     public function reservasAction(Request $request){
         $repository = $this->getDoctrine()->getRepository(Reserva::class);
-        $reservas = $repository->findAll();
+        $reservas = $repository->findByUsuario($this->getUser());
         return $this->render('gestion/reservas.html.twig',array('reservas'=>$reservas));
     }
 
+     /**
+     * @Route("/borrar/{id}", name="borrarReserva")
+     * 
+     **/
+    public function borrarTapaAction(Request $request,$id=null)
+    {
+        $repository = $this->getDoctrine()->getRepository(Reserva::class);
+        $reserva = $repository->find($id);
+
+        
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($reserva);
+        $em->flush();
+        
+        return $this->redirectToRoute('reservas');
+    }
 
 }
 ?>
