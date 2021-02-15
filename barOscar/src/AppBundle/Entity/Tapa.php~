@@ -234,4 +234,38 @@ class Tapa
     {
         return $this->categoria;
     }
+
+    /**
+     * Add ingrediente
+     *
+     * @param \AppBundle\Entity\Ingrediente $ingrediente
+     *
+     * @return Tapa
+     */
+    public function addIngrediente(\AppBundle\Entity\Ingrediente $ingrediente)
+    {
+        $this->ingredientes[] = $ingrediente;
+
+        return $this;
+    }
+
+    /**
+     * Remove ingrediente
+     *
+     * @param \AppBundle\Entity\Ingrediente $ingrediente
+     */
+    public function removeIngrediente(\AppBundle\Entity\Ingrediente $ingrediente)
+    {
+        $this->ingredientes->removeElement($ingrediente);
+    }
+
+    /**
+     * Get ingredientes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIngredientes()
+    {
+        return $this->ingredientes;
+    }
 }

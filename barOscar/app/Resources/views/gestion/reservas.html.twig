@@ -1,0 +1,38 @@
+{#plantilla de nuestra aplicacion#}
+{%extends 'base.html.twig' %}
+{# {% form_theme form 'form/tapaForm.html.twig' %} #}
+{%block title%}
+Reservas
+{%endblock%}
+
+{% block body %}
+    <div class="container">
+        <div class="col-md-8">
+            <h1>Reservas</h1>
+            <table class="table mt-5">
+             <thead class="thead-dark">
+            <tr>
+            <th scope="col">#</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Num Comensales</th>
+            <th scope="col">Observaciones</th>
+            </tr>
+             </thead>
+          <tbody>
+            
+            {% for reserva in reservas %}
+            <tr>
+                <th scope="row">{{reserva.id}}</th>
+                <td>{{reserva.fecha|date('Y/m/d h:i')}}</td>
+                <td>{{reserva.comensales}}</td>
+                <td>{{reserva.observaciones}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+
+
+        </div>
+    </div>
+
+{% endblock %}

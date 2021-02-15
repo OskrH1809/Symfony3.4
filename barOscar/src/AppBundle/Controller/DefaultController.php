@@ -12,6 +12,8 @@ use AppBundle\Form\UsuarioType;
 use AppBundle\Entity\Ingrediente;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+// use Symfony\Component\Serializer\Encoder\JsonEncoder;
+
 
 class DefaultController extends Controller
 {
@@ -133,6 +135,8 @@ class DefaultController extends Controller
             $usuario->setPassword($password);
 
             $usuario->setUsername($usuario->getEmail());
+
+            $usuario->setRoles(array('ROLE_USER'));  
 
             // 4) save the User!
             $entityManager = $this->getDoctrine()->getManager();
