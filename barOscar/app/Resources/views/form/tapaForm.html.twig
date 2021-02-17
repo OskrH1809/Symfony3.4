@@ -7,6 +7,11 @@
     </div>
     </div>
 {%- endblock form_row -%}
+{% block _tapa_categoria_widget %}
+    
+         {{ block('choice_widget') }} nueva Categoria <input type="text" name="" value="" id="nuevaCat"><button type="button" name="button" onclick="return nuevaCatAdd();">+</button>
+    
+{% endblock %}
 
 {%- block form_widget_simple -%}
     {%- set type = type|default('text') -%}
